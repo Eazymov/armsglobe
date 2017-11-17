@@ -2,9 +2,7 @@ var masterContainer = document.getElementById("visualization");
 var overlay = document.getElementById("visualization");
 var mapIndexedImage;
 var mapOutlineImage;
-//	where in html to hold all our things
 var glContainer = document.getElementById("glContainer");
-//	contains a list of country codes with their matching country names
 var isoFile = "src/country_iso3166.json";
 var latlonFile = "src/country_lat_lon.json";
 var camera, scene, renderer, controls;
@@ -17,35 +15,24 @@ var sphere;
 var rotating;
 var visualizationMesh;
 var mapUniforms;
-//	contains the data loaded from the arms data file
-//	contains a list of years, followed by trades within that year
-//	properties for each "trade" is: e - exporter, i - importer, v - value (USD), wc - weapons code (see table)
 var timeBins;
-//	contains latlon data for each country
 var latlonData;
-//	contains above but organized as a mapped list via ['countryname'] = countryobject
-//	each country object has data like center of country in 3d space, lat lon, country name, and country code
 var countryData = new Object();
-//	contains a list of country code to country name for running lookups
 var countryLookup;
 var selectableYears = [];
 var selectableCountries = [];
-//	a list of weapon 'codes'
-//	now they are just strings of categories
-//	Category Name : Category Code
 var weaponLookup = {
   "Military Weapons": "mil",
   "Civilian Weapons": "civ",
   Ammunition: "ammo"
 };
-//	a list of the reverse for easy lookup
 var reverseWeaponLookup = new Object();
 for (var i in weaponLookup) {
   var name = i;
   var code = weaponLookup[i];
   reverseWeaponLookup[code] = name;
 }
-//	A list of category colors
+
 var categoryColors = {
   mil: 0xdd380c,
   civ: 0x3dba00,
@@ -53,19 +40,12 @@ var categoryColors = {
 };
 var exportColor = 0xdd380c;
 var importColor = 0x154492;
-//	the currently selected country
 var selectedCountry = null;
 var previouslySelectedCountry = null;
-//	contains info about what year, what countries, categories, etc that's being visualized
 var selectionData;
-//	when the app is idle this will be true
 var idle = false;
-//	for svg loading
-//	deprecated, not using svg loading anymore
 var assetList = [];
-//	TODO
-//	use underscore and ".after" to load these in order
-//	don't look at me I'm ugly
+
 window.onload = function start () {
   //	detect for webgl and reject everything else
   if (!Detector.webgl) {
@@ -122,14 +102,9 @@ var Selection = function() {
   };
 };
 
-//	-----------------------------------------------------------------------------
-//	All the initialization stuff for THREE
 function initScene() {
-  //	-----------------------------------------------------------------------------
-  //	Let's make a scene
   scene = new THREE.Scene();
   scene.matrixAutoUpdate = false;
-  // scene.fog = new THREE.FogExp2( 0xBBBBBB, 0.00003 );
 
   scene.add(new THREE.AmbientLight(0x505050));
 
@@ -159,16 +134,12 @@ function initScene() {
   lookupTexture.needsUpdate = true;
 
   var indexedMapTexture = new THREE.Texture(mapIndexedImage);
-  //THREE.ImageUtils.loadTexture( 'images/map_indexed.png' );
   indexedMapTexture.needsUpdate = true;
   indexedMapTexture.magFilter = THREE.NearestFilter;
   indexedMapTexture.minFilter = THREE.NearestFilter;
 
   var outlinedMapTexture = new THREE.Texture(mapOutlineImage);
   outlinedMapTexture.needsUpdate = true;
-  // outlinedMapTexture.magFilter = THREE.NearestFilter;
-  // outlinedMapTexture.minFilter = THREE.NearestFilter;
-
   var uniforms = {
     mapIndex: { type: "t", value: 0, texture: indexedMapTexture },
     lookup: { type: "t", value: 1, texture: lookupTexture },
@@ -227,47 +198,29 @@ function initScene() {
     ["Military Weapons", "Civilian Weapons", "Ammunition"]
   );
 
-  // test for highlighting specific countries
-  // highlightCountry( ["United States", "Switzerland", "China"] );
-
-  //	-----------------------------------------------------------------------------
-  //	Setup our renderer
   renderer = new THREE.WebGLRenderer({ antialias: false });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.autoClear = false;
-
   renderer.sortObjects = false;
   renderer.generateMipmaps = false;
 
   glContainer.appendChild(renderer.domElement);
 
-  //	-----------------------------------------------------------------------------
-  //	Event listeners
   document.addEventListener("mousemove", onDocumentMouseMove, true);
-  document.addEventListener("windowResize", onDocumentResize, false);
-
-  //masterContainer.addEventListener( 'mousedown', onDocumentMouseDown, true );
-  //masterContainer.addEventListener( 'mouseup', onDocumentMouseUp, false );
   document.addEventListener("mousedown", onDocumentMouseDown, true);
   document.addEventListener("mouseup", onDocumentMouseUp, false);
 
   masterContainer.addEventListener("click", onClick, true);
   masterContainer.addEventListener("mousewheel", onMouseWheel, false);
-
-  //	firefox
   masterContainer.addEventListener(
     "DOMMouseScroll",
     function(e) {
-      var evt = window.event || e; //equalize event object
+      var evt = window.event || e;
       onMouseWheel(evt);
     },
     false
   );
 
-  document.addEventListener("keydown", onKeyDown, false);
-
-  //	-----------------------------------------------------------------------------
-  //	Setup our camera
   camera = new THREE.PerspectiveCamera(
     12,
     window.innerWidth / window.innerHeight,
@@ -299,8 +252,8 @@ function animate() {
   rotateX += rotateVX;
   rotateY += rotateVY;
 
-  rotateVX *= 0.98;
-  rotateVY *= 0.98;
+  rotateVX *= 1;
+  rotateVY *= 1;
 
   if (dragging || rotateTargetX !== undefined) {
     rotateVX *= 0.6;
