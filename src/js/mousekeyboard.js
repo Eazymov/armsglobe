@@ -44,7 +44,6 @@ function onDocumentMouseDown( event ) {
 }	
 
 function onDocumentMouseUp( event ){
-	d3Graphs.zoomBtnMouseup();
 	dragging = false;
 	histogramPressed = false;
 }

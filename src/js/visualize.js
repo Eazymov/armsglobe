@@ -1,6 +1,4 @@
 function buildDataVizGeometries(linearData) {
-  var loadLayer = document.getElementById("loading");
-
   for (var i in linearData) {
     var yearBin = linearData[i].data;
 
@@ -8,7 +6,6 @@ function buildDataVizGeometries(linearData) {
     selectableYears.push(year);
 
     var count = 0;
-    console.log("Building data for ..." + year);
     for (var s in yearBin) {
       var set = yearBin[s];
 
@@ -19,19 +16,8 @@ function buildDataVizGeometries(linearData) {
       importer = countryData[importerName];
 
       if (exporter === undefined || importer === undefined) continue;
-
-      //set.lineGeometry = makeConnectionLineGeometry(exporter, importer, set.v, set.wc);
     }
-
-    //	use this break to only visualize one year (1992)
-    // break;
-
-    //	how to make this work?
-    // loadLayer.innerHTML = 'loading data for ' + year + '...';
-    // console.log(loadLayer.innerHTML);
   }
-
-  loadLayer.style.display = "none";
 }
 
 function getVisualizedMesh(
@@ -180,8 +166,6 @@ function getVisualizedMesh(
     }
   }
 
-  // console.log(selectedCountry);
-
   linesGeo.colors = lineColors;
 
   //	make a final mesh out of this composite
@@ -211,7 +195,7 @@ function getVisualizedMesh(
     texture: {
       type: "t",
       value: 0,
-      texture: THREE.ImageUtils.loadTexture("images/particleA.png")
+      texture: THREE.ImageUtils.loadTexture("assets/img/particleA.png")
     }
   };
 
@@ -228,7 +212,7 @@ function getVisualizedMesh(
     // sizeAttenuation: true,
   });
 
-  var particleGraphic = THREE.ImageUtils.loadTexture("images/map_mask.png");
+  var particleGraphic = THREE.ImageUtils.loadTexture("assets/img/map_mask.png");
   var particleMat = new THREE.ParticleBasicMaterial({
     map: particleGraphic,
     color: 0xffffff,
@@ -317,8 +301,6 @@ function selectVisualization(
     historical: getHistoricalData(selectedCountry)
   };
 
-  // console.log(selectedCountry);
-
   //	clear off the country's internally held color data we used from last highlight
   for (var i in countryData) {
     var country = countryData[i];
@@ -347,7 +329,6 @@ function selectVisualization(
     exportCategories,
     importCategories
   );
-  console.timeEnd("getVisualizedMesh");
 
   //	add it to scene graph
   visualizationMesh.add(mesh);
@@ -363,7 +344,6 @@ function selectVisualization(
     attachMarkerToCountry(countryName, country.mapColor);
   }
 
-  // console.log( mesh.affectedCountries );
   highlightCountry(mesh.affectedCountries);
 
   if (previouslySelectedCountry !== selectedCountry) {
@@ -384,17 +364,9 @@ function selectVisualization(
         piCounter++;
         rotateTargetY = wrap(targetY0, -Math.PI, Math.PI);
       }
-      // console.log(rotateTargetY);
-      //lines commented below source of rotation error
-      //is there a more reliable way to ensure we don't rotate around the globe too much?
-      /*
-			if( Math.abs(rotateTargetY - rotating.rotation.y) > Math.PI )
-				rotateTargetY += Math.PI;		
-			*/
+
       rotateVX *= 0.6;
       rotateVY *= 0.6;
     }
   }
-
-  d3Graphs.initGraphs();
 }
