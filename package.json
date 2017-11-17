@@ -1,0 +1,30 @@
+{
+  "name": "globe",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server",
+    "build": "cross-env NODE_ENV=production webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eazymov/armsglobe.git"
+  },
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/Eazymov/armsglobe/issues"
+  },
+  "homepage": "https://github.com/Eazymov/armsglobe#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "cross-env": "^5.1.1",
+    "dotenv": "^4.0.0",
+    "uglifyjs-webpack-plugin": "^1.0.1",
+    "webpack": "^3.8.1",
+    "webpack-concat-plugin": "^1.4.2",
+    "webpack-dev-server": "^2.9.4"
+  }
+}

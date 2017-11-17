@@ -5,8 +5,8 @@ var mapOutlineImage;
 //	where in html to hold all our things
 var glContainer = document.getElementById("glContainer");
 //	contains a list of country codes with their matching country names
-var isoFile = "country_iso3166.json";
-var latlonFile = "country_lat_lon.json";
+var isoFile = "src/country_iso3166.json";
+var latlonFile = "src/country_lat_lon.json";
 var camera, scene, renderer, controls;
 var pinsBase, pinsBaseMat;
 var lookupCanvas;
@@ -66,7 +66,7 @@ var assetList = [];
 //	TODO
 //	use underscore and ".after" to load these in order
 //	don't look at me I'm ugly
-function start () {
+window.onload = function start () {
   //	detect for webgl and reject everything else
   if (!Detector.webgl) {
     Detector.addGetWebGLMessage();

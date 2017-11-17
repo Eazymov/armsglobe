@@ -20,7 +20,7 @@ function loadWorldPins(callback) {
 }
 
 function loadContentData(callback) {
-  var filePath = "../countries.json";
+  var filePath = "src/countries.json";
   filePath = encodeURI(filePath);
 
   xhr = new XMLHttpRequest();

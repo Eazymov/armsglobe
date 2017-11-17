@@ -3,38 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width, initial-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
 	<title>Globe</title>
-  
+
   <link rel="shortcut icon" href="data:," type="image/x-icon">
   <link rel="stylesheet" href="src/css/style.css">
 </head>
-<body onload="start()">
-	<div id="wrapper">
-		<div class="marker">
-      <span class="marker__country-text"></span>
-		</div>
+<body>
+  <div class="marker">
+    <span class="marker__country-text"></span>
+  </div>
 
-		<div id="visualization" >
-			<!-- 2D overlay elements go in here -->
-			<div id="glContainer"> <!-- 3D webgl canvas here --> </div>
-		</div>
-	</div>
-
-  <script src="assets/js/Detector.js"></script>
-  <script src="assets/js/Tween.js"></script>
-  <script src="assets/js/dat.gui.min.js"></script>
-  <script src="assets/js/Three.js"></script>
-  <script src="assets/js/THREEx.KeyboardState.js"></script>
-  <script src="assets/js/THREEx.WindowResize.js"></script>
-  <script src="assets/js/Stats.js"></script>
-  <script src="assets/js/jquery-1.7.1.min.js"></script>
-  <script src="assets/js/ShaderExtras.js"></script>
-  <script src="assets/js/canvg.js"></script>
-  <script src="assets/js/rgbcolor.js"></script>
-  <script src="assets/js/innersvg.js"></script>
-  <script src="assets/js/d3.v2.min.js"></script>
+  <div id="visualization" >
+    <!-- 2D overlay elements go in here -->
+    <div id="glContainer"> <!-- 3D webgl canvas here --> </div>
+  </div>
 
   <script type="x-shader/x-vertex" id="vertexshader">
     uniform float amplitude;
@@ -100,16 +84,6 @@
     }
   </script>
 
-  <script src="src/js/util.js"></script>
-  <script src="src/js/mousekeyboard.js"></script>
-  <script src="src/js/datguicontrol.js"></script>
-  <script src="src/js/dataloading.js"></script>
-  <script src="src/js/camerastates.js"></script>
-  <script src="src/js/geopins.js"></script>
-  <script src="src/js/visualize.js"></script>
-  <script src="src/js/visualize_lines.js"></script>
-  <script src="src/js/markers.js"></script>
-  <script src="src/js/svgtoy.js"></script>
-  <script src="src/js/main.js"></script>
+  <script async src="dist/build.js"></script>
 </body>
 </html>
